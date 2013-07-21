@@ -1,0 +1,32 @@
+#input{
+	border : 1px solid red;
+}
+
+#blanks{
+	border : 1px solid green;
+	padding-top : 100px;
+	padding-bottom : 40px;
+	padding-left : 10px;
+	font-size : 35px;
+	height : 70px;
+}
+#hangmanimg{
+	border : 1px solid yellow;
+	width : 40%;
+	margin-left : 60%;
+}
+
+.keys{
+	width : 45px;
+	height : 45px;
+	margin-left : 10px;
+	margin-bottom : 10px;	
+	font-size : 20px;
+	font-family : Helvetica;
+}
+
+#keysnblank{
+	border : 1px solid blue;
+	float : left;
+	width : 60%;
+}

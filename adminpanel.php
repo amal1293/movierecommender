@@ -6,6 +6,8 @@
 <html>
 	<head>
 		<title>Admin Control Panel</title>
+		<link type='text/css' rel='stylesheet' href='style.css'/>
+		<link rel='icon' href='favicon.ico' type='image/x-icon'/>
 		<script type='text/javascript'>
 			function helpdate(id){
 				var el = document.getElementById(id);

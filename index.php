@@ -6,10 +6,19 @@
 <html>
 	<head>
 		<title>Movie Recommendation Engine</title>
+		<link href='style.css' rel='stylesheet' type='text/css'/>
+		<link rel='icon' href='favicon.ico' type='image/x-icon'/>
 	</head>
 	<body>
+			<div id='header'>
+				MOVIES
+			</div>
+			<div id='nav'>
+				| <a href='index.php'>Home</a> | <a href='top.php'>Top Movies</a> | <a href='profile.php?uid=<? echo $_SESSION['uid'];?>' >Profile</a> | <a href='forum/'>Forum</a> | <a href='hangman/hangman.php'>Fun</a> |
+			</div>
 			<?php
 				if(!isset($_SESSION['uid'])){
+					echo "<div id='login'>";
 					if(isset($_POST['login'])){
 						$username = trim(mysql_real_escape_string($_POST['username']));
 						$password = trim($_POST['password']);
@@ -24,26 +33,20 @@
 						}
 					}
 			?>
-					<table border='0'>
+					<p id='logintitle'>LOGIN</p>
+					<table border='0' id='logintable'>
 					<form method='POST' action='index.php'>
-					<tr><td>Username:</td><td><input type='text' name='username' id='username'></td></tr>
-					<tr><td>Password:</td><td><input type='password' name='password' id='password'></td></tr>
-					<tr><td colspan='2'><input type='submit' value='Login' name='login'></td></tr>
+					<tr><td class='loginlabel'>Username:</td><td class='logininput'><input type='text' name='username' id='username'></td></tr>
+					<tr><td class='loginlabel'>Password:</td><td class='logininput'><input type='password' name='password' id='password'></td></tr>
+					<tr><td colspan='2' align='center'><input type='submit' value='Login' name='login'></td></tr>
 					</form>
 					</table>
-					Not a registered user? <a href='register.php'>Register Now</a>
+					<p id='toregister'>Not a registered user? <a href='register.php'>Register Now</a></p>
 			<?php
+					echo "</div>";
 				}
-				else{
-			?>
 
-					<div id='header'>
-						MOVIES
-					</div>
-					<div id='nav'>
-						| Home | <a href='top.php'>Top Movies</a> | <a href='profile.php?uid=<? echo $_SESSION['uid'];?>' >Profile</a> | <a href='forum/'>Forum</a> | <a href='hangman/hangman.php'>Fun</a> |
-					</div>
-			<?
+				else{
 					$sql2="SELECT username FROM users WHERE id='".$_SESSION['uid']."'";
 					$query2 = mysql_query($sql2) or die(mysql_error());
 					echo "<div id='userdat'>";
@@ -64,11 +67,12 @@
 					echo "<input type='submit' name='search' value='Search'/>";
 					echo "</form>";
 					echo "</div>";
+					echo "<hr/>";
 
-					echo "<div id='maincontent'>";
+				echo "<div id='maincontent'>";
 				
 
-				echo "Your Recommendations:<br/>";
+				echo "<span id='foryou'>Your Recommendations:</span><br/>";
 				//		Recommendation Engine
 
 				//1.Select Possible Movies
@@ -126,6 +130,17 @@
 										//echo 'Movie1'.$checkmovie.'<br/>Movieid:'.$movie2.'<br/> Rate diff:'.$avgrating.'<br/>Users Rated Both'.$userno.'<br/>Rating For 1st Movie'.$rating2.'<br/><br/>';
 										$top += ($userno*($rating2-$avgrating));
 									}
+									else{
+										$sql11 = "SELECT users_rated_both,sum FROM compare WHERE movie1='".$movie2."' AND movie2 = '".$checkmovie."'";
+										$query11 = mysql_query($sql11) or die(mysql_error());
+										if(mysql_num_rows($query11) > 0){
+											$userno = mysql_result($query11,0,'users_rated_both');
+											$sum = mysql_result($query11,0,'sum');
+											$avgrating = $sum/$userno;
+											$bottom += $userno;
+											$top += ($userno*($rating2+$avgrating));
+										}
+									}
 								}
 								if($bottom == 0)
 									$possiblerating[$checkmovie] = 0;
@@ -138,19 +153,23 @@
 							//4.Echo Movies Based On Possible Rating
 
 							if(isset($possiblerating)){
-									if(sizeof($possiblerating) > 0){
-									echo "<form method='POST' action='index.php'>";
-									echo "Genre:";
-									echo "<select name='genre' onchange='this.form.submit()'>";
-									echo "<option value='All'>All</option>";
-									$sql12 = "SELECT genre FROM genre";
-									$query12 = mysql_query($sql12) or die(mysql_error());
-									while($genres = mysql_fetch_assoc($query12)){
-										echo "<option value='".$genres['genre']."'>".$genres['genre']."</option>";
-									}
-									echo "</select>";
-									echo "<form>";
+								echo "<form method='POST' action='index.php'>";
+								echo "<span id='genre'>";
+								echo "Genre:";
+								echo "<select name='genre' onchange='this.form.submit()'>";
+								echo "<option value='All'>All</option>";
+								$sql12 = "SELECT genre FROM genre";
+								$query12 = mysql_query($sql12) or die(mysql_error());
+								while($genres = mysql_fetch_assoc($query12)){
+									if(isset($_POST['genre']) && $_POST['genre'] == $genres['genre'])
+										$select = 'selected="selected"';
+									else 
+										$select = "";
+									echo "<option value='".$genres['genre']."' ".$select.">".$genres['genre']."</option>";
 								}
+								echo "</select>";
+								echo "</span>";
+								echo "</form><br/>";
 								arsort($possiblerating);
 								foreach($possiblerating as $recommend=>$predictrating){
 									if(!isset($_POST['genre']) || $_POST['genre'] == 'All'){
@@ -162,10 +181,13 @@
 										$query10 = mysql_query($sql10) or die(mysql_error());
 									}
 									if(mysql_num_rows($query10) > 0){
+										echo "<div class='recimg'>";
 										while($printmovie = mysql_fetch_assoc($query10)){
-											//echo $predictrating;
-											echo "<a href='movie.php?mid=".$printmovie['id']."'><img src='posters/".$printmovie['poster']."' height='250' width='250'/></a>";
+											//echo $predictrating;	
+											echo "<a href='movie.php?mid=".$printmovie['id']."'><img class='recimg' src='posters/".$printmovie['poster']."' height='250' width='250'/></a><br/>";
+											echo "<span class='rectitle'>".$printmovie['title']."</span>";
 										}
+										echo "</div>";
 									}
 								}
 							}
@@ -173,7 +195,12 @@
 					}
 				}
 				echo "</div>";
-			}
 			?>
+			<div id='newmovies'>
+				<?
+					require 'newmovies.php';
+			}
+				?>
+			</div>
 	</body>
 </html>

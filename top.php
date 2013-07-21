@@ -8,13 +8,15 @@
 	<title>
 		Top Movies
 	</title>
+	<link type='text/css' rel='stylesheet' href='style.css'/>
+	<link rel='icon' type='image/x-icon' href='favicon.ico'/>
 </head>
 <body>
 	<div id='header'>
 		MOVIES
 	</div>
 	<div id='nav'>
-		| <a href='index.php'>Home</a> | Top Movies | <a href='profile.php?uid=<? echo $_SESSION['uid'];?>' >Profile</a> | <a href='forum/'>Forum</a> | <a href='hangman/hangman.php'>Fun</a> |
+		| <a href='index.php'>Home</a> | <a href='top.php'>Top Movies</a> | <a href='profile.php?uid=<? echo $_SESSION['uid'];?>' >Profile</a> | <a href='forum/'>Forum</a> | <a href='hangman/hangman.php'>Fun</a> |
 	</div>
 	<?php
 		if(!isset($_SESSION['uid']))
@@ -34,7 +36,17 @@
 				}
 				echo "<a href='logout.php'>Logout</a> | ";
 				echo "</div>";
+				echo "<div id='searchbox'>";
+				if(!isset($_GET['query']))
+					$_GET['query'] = '';
+				echo "<form method='GET' action='search.php?query=".$_GET['query']."'>";
+				echo "<input type='text' name='query' id='search'/>";
+				echo "<input type='submit' name='search' value='Search'/>";
+				echo "</form>";
+				echo "</div>";
+				echo "<hr/>";
 				echo "<div id='content'>";
+				echo "<div id='maincontent'>";
 				$sql2 = "SELECT * FROM movies WHERE avgrating != 0.00 ORDER BY avgrating DESC,no_voters DESC";
 				$query2 = mysql_query($sql2) or die(mysql_error());
 				if(mysql_num_rows($query2) > 0){
@@ -47,6 +59,9 @@
 					}
 					echo "</table>";		
 				}
+				echo "</div>";
+				echo "<div id='newmovies'>";
+				require 'newmovies.php';
 				echo "</div>";
 			}
 		}	

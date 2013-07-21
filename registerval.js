@@ -19,25 +19,25 @@ function validate(){
 	if(firstname != "" && !(firstname[0] >= 'A' && firstname[0] <= 'Z')){
 		errorval.innerHTML += "First Name must start with a capital letter.<br/>";
 		returnvalue = false;
-		firstname = "";
+		document.getElementById('firstname').value = "";
 	}
 	
 	if(lastname != "" && !(lastname[0] >= 'A' && lastname[0] <= 'Z')){
 		errorval.innerHTML += "Last Name must start with a capital letter.<br/>";
 		returnvalue = false;
-		lastname = "";
+		document.getElementById('lastname').value = "";
 	}
 
 	if(username!= "" && !(/^[a-zA-Z0-9\_]+$/.test(username))){
 		errorval.innerHTML += "Username must contain only letters,numbers and underscore.<br/>";
 		returnvalue = false;
-		username = "";
+		document.getElementById('username').value = "";
 	}
 	
 	if(username != "" &&(username.length < 4 || username.length > 10)){
 		errorval.innerHTML += "Username must be between 4 and 10 characters long.<br/>";
 		returnvalue = false;
-		username = "";
+		document.getElementById('username').value = "";
 	}
 
 	if(password!= "" && password.length < 6){
@@ -53,13 +53,13 @@ function validate(){
 	if(email != "" && !(/^[a-zA-Z0-9]+[-\._]?[a-zAA-Z0-9]?@[a-zA-Z0-9]+\.[a-z]+\.?[a-z]{1,3}$/.test(email))){
 		errorval.innerHTML += "Enter a valid email.<br/>";
 		returnvalue = false;
-		email = "";
+		document.getElementById('email').value = "";
 	}
 
 	if(returnvalue == false){
-		password = "";
-		repassword = "";
-		captchatext = "";
+		document.getElementById('password').value = "";
+		document.getElementById('repassword').value = "";
+		document.getElementById('captchatext').value = "";
 	}
 
 	return returnvalue;

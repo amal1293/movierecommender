@@ -6,6 +6,8 @@
 <html>
 	<head>
 		<script type='text/javascript' src='rating.js'></script>
+		<link type='text/css' href='style.css' rel='stylesheet'/>
+		<link rel='icon' href='favicon.ico' type='image/x-icon'/>
 		<title>Movie</title>
 	</head>
 	<body>
@@ -86,7 +88,70 @@
 							<span id='rating'>0.0</span>/10.0<br/>
 					<?php
 						}
-						
+						if(isset($_POST['watchlist'])){
+							$sql5 = "SELECT watchlist FROM users WHERE id='".$_SESSION['uid']."'";
+							$query5 = mysql_query($sql5) or die(mysql_error());
+							$wlist = mysql_result($query5,0,'watchlist');
+							if($wlist == "")
+								$wlist = $_GET['mid'];
+							else
+								$wlist = $wlist.",".$_GET['mid'];
+							$sql5 = "UPDATE users SET watchlist='".$wlist."' WHERE id='".$_SESSION['uid']."'";
+							$query5 = mysql_query($sql5) or die(mysql_error());
+						}
+						if(isset($_POST['rmwatchlist'])){
+							$sql8 = "SELECT watchlist FROM users WHERE id='".$_SESSION['uid']."'";
+							$query8 = mysql_query($sql8) or die(mysql_error());
+							$wlist = explode(",",mysql_result($query8,0,'watchlist'));
+							foreach($wlist as $rmkey=>$rmmovie){
+								if($rmmovie == $_GET['mid'])
+									unset($wlist[$rmkey]);
+							}
+							$updatedlist = implode(",",$wlist);
+							$sql9 = "UPDATE users SET watchlist = '".$updatedlist."' WHERE id='".$_SESSION['uid']."'";
+							$query9 = mysql_query($sql9) or die(mysql_error());
+						}
+						$sql4 = "SELECT watchlist FROM users WHERE id='".$_SESSION['uid']."'";
+						$query4 = mysql_query($sql4) or die(mysql_error());
+						if(mysql_num_rows($query4) > 0){
+							$ids = explode(",",	mysql_result($query4,0,'watchlist'));
+							if(in_array($_GET['mid'], $ids)){
+								echo "<form method='POST' action='movie.php?mid=".$_GET['mid']."'><input type='submit' name='rmwatchlist' id='rmwatchlist' value='Remove From Watchlist'/></form>";
+							}
+							else{
+							echo "<form method='POST' action='movie.php?mid=".$_GET['mid']."'><input type='submit' name='watchlist' id='watchlist' value='Add To Watchlist'/></form>";
+							}
+						}
+
+						//User Reviews
+						echo "User Reviews:<br/>";
+						if(isset($_POST['submitreview'])){
+							$review = trim(mysql_real_escape_string($_POST['review']));
+							if(!empty($review)){
+								$sql7 = "INSERT INTO reviews(uid,mid,reviews) VALUES('".$_SESSION['uid']."','".$_GET['mid']."','".$review."')";
+								$query7 = mysql_query($sql7) or die(mysql_error());
+							}
+						}
+						$sql6 = "SELECT users.username,reviews.uid,reviews.reviews FROM users INNER JOIN reviews ON users.id=reviews.uid WHERE mid='".$_GET['mid']."'";
+						$query6 = mysql_query($sql6) or die(mysql_error());
+						$reviewed = 0;
+						if(mysql_num_rows($query6) == 0)
+							echo "No reviews posted.<br/>";
+						else{
+							while($review = mysql_fetch_assoc($query6)){
+								echo $review['username'].":".$review['reviews'].'<br/>';
+								if($review['uid'] == $_SESSION['uid'])
+									$reviewed = 1;
+							}
+						}
+						if($reviewed == 0){
+							echo "Write Review:<br/>";
+							echo "<form method='POST' action='movie.php?mid=".$_GET['mid']."'>";
+							echo "<textarea name='review' maxlength='255'></textarea><br/>";
+							echo "<input type='submit' name='submitreview' value ='Post Review'/>";
+							echo "</form>";
+						}
+
 					}
 				}
 			}

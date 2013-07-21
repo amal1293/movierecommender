@@ -8,10 +8,17 @@
 		<title>Register</title>
 		<script type='text/javascript' src='registerval.js'></script>
 		<link type='text/css' rel='stylesheet' href='style.css'/>
+		<link rel='icon' type='image/x-icon' href='favicon.ico'>
 	</head>
 	<body>
 		<div id='registration'>
-			<h2>Registration Form</h2>
+			<div id='header'>
+						MOVIES
+			</div>
+			<div id='nav'>
+			| <a href='index.php'>Home</a> | <a href='top.php'>Top Movies</a> | <a href='profile.php?uid=<? echo $_SESSION['uid'];?>' >Profile</a> | <a href='forum/'>Forum</a> | <a href='hangman/hangman.php'>Fun</a> |
+			</div>
+			<p id='regtitle'>REGISTRATION FORM</p>
 			<div id='validation'>
 				<?php 
 					require 'registerval.php'; 
@@ -21,7 +28,7 @@
 				?>
 			</div>
 			<div id='form'>
-			<table border='0'>
+			<table border='0' id='regtable'>
 				<form method='POST' action='register.php' onsubmit='return validate()'>
 					<tr>
 						<td>First Name:</td>

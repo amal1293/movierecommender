@@ -1,0 +1,251 @@
+#header{
+	text-align : center;
+	height : 80px;
+	font-size : 50px;
+	line-height : 80px;
+	font-family : Helvetica;
+	background-image : url("backgrounds/banner.jpg");
+	background-size : cover;
+	color : #D9D9D9;
+}                                                                                                            
+
+#nav{
+	/*border : 1px solid red;*/
+	height : 30px;
+	line-height : 40px;
+	padding: 10px;
+	font-size : 20px;
+	font-family : Helvetica;
+	background-image : url("backgrounds/banner.jpg");
+	background-size : cover;
+	color : black;
+}
+
+#nav a{
+	color : #16078d;
+}
+
+#userdat{
+	text-align : right;
+	height : 30px;
+	padding : 5px;
+	line-height : 30px;
+	margin-bottom : 5px;
+}
+
+#searchbox{
+	padding : 5px;
+	text-align : right;
+}
+
+#maincontent{
+	width : 62%;
+	position : absolute;
+	margin-left : 35%;
+	min-height : 64%;
+}
+.recimg{
+	position : relative;
+	height : 250px;
+	width : 250px;
+	display : inline-block;
+	margin-left : 10px;
+	margin-bottom : 50px;
+}
+
+.rectitle{
+	display : none;
+}
+
+
+.recimg:hover .rectitle{
+	text-align : center;
+	display : block;
+	text-align : center;
+	margin-top : -73px;
+	font-family : Helvetica;
+	text-shadow : 1px 1px 3px #b6b6b9;
+}
+
+#maincontent img:hover{
+	width : 280px;
+	height: 280px;
+	top: -25px;
+	left : -25px;
+	box-shadow : 2px -2px 6px 3px #b6b6b9;
+	z-index : 999;	
+}
+
+#newmovies{
+	padding : 3px;
+	position : absolute;
+	width : 30%;
+	background-color : #dcd1d1;
+	color : black;
+	font-family : Helvetica;
+	padding-bottom : 20px;
+	min-height : 30%;
+	border-radius : 9px;
+	box-shadow : 2px 2px 2px black;
+}
+
+#newmovies a{
+	color : #3c4af6;
+}
+
+#newmtable{
+	margin : 0 auto;
+}
+
+#newmtable td{
+	border-bottom : 1px solid grey;
+}
+
+#newtitle{
+	padding-top : 10px;
+	font-size : 22px;
+	display : block;
+	text-align : center;
+	text-decoration : underline;
+}
+
+#newmname{
+	width : 60%;
+}
+
+#foryou{
+
+	font-size : 28px;
+	text-align : center;
+	display : block;
+	font-family : Helvetica;
+}
+
+a{
+	text-decoration : none !important;
+}
+
+#genre{
+	text-align : right;
+	display : block;
+}
+
+#profilename{
+	border : 1px solid red;
+	font-size : 22px;
+	font-family : Helvetica;
+	display : block;
+	text-align : center;
+}
+
+#leftnav{
+	float : left;
+	border : 1px solid green;
+	width : 28%;
+	padding : 5px;
+	background-color : #151519;
+}
+
+#leftnav img{
+	display : block;
+	margin : 0 auto;
+}
+
+#contentbottom{
+	padding : 5px;
+	border :1px solid blue;
+	margin-left : 30%;
+	width : 65%;
+}
+
+.setting{
+	border : 1px solid #c7b8b2;
+	display : block;
+	margin-top : -10px;
+}
+
+#login{
+	font-size : 22px;
+	width : 30%;
+	margin : 0 auto;
+	padding : 10px;
+	margin-top : 5%;
+}
+
+#login input[type='text'], #login input[type='password']{
+	width : 90%;
+	height : 50%;
+	border-radius : 5px;
+}
+
+#login input[type='submit']{
+	text-align : center;
+	margin : 0 auto;
+	width : 40%;
+	height : 125%;
+	font-size : 18px;
+	border-radius : 5px;
+}
+
+.loginlabel{
+	text-align : right;
+	height : 60px;
+}
+
+.logininput{
+	height : 60px;
+}
+
+#logintable{
+	margin : 0 auto;
+}
+
+#logintitle,#regtitle{
+	text-align : center;
+	font-family : Helvetica;
+	font-size : 40px;
+}
+
+#toregister{
+	font-size : 18px;
+	text-align : center;
+}
+
+#regtable{
+	margin : 0 auto;
+}
+
+#regtable td{
+	height : 50px;
+}
+
+ #form input[type='submit']{
+	text-align : center;
+	margin : 0 auto;
+	width : 37%;
+	height : 80%;
+	font-size : 18px;
+	border-radius : 5px;
+	margin-left : 28%;
+}
+
+#validation{
+	margin-left : 34%;
+	padding : 10px;
+	width : 34%;
+	color : red;
+}
+
+img{
+	border : 3px solid white;
+	border-radius : 3px;
+}
+
+body{
+	background-color : #151519;
+	color : white;
+}
+
+a{
+	color : #79b8f6;
+}

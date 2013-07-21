@@ -6,6 +6,8 @@
 <html>
 	<head>
 		<title>Settings</title>
+		<link type='text/css' href='style.css' rel='stylesheet'/>
+		<link rel='icon' href='favicon.ico' type='image/'
 	</head>
 	<body>
 		<div id='header'>
@@ -26,7 +28,17 @@
 						echo "<a href='adminpanel.php'>Admin Control Panel</a> | ";
 					echo "<a href='logout.php'>Logout</a>";
 					echo "</div>";
-					echo "<div id='admincontrols'>";
+					echo "<div id='leftnav'>";
+					$sql2 = "SELECT username,photo FROM users WHERE id='".$_SESSION['uid']."'";
+					$query2 = mysql_query($sql2) or die(mysql_error());
+					$profile = mysql_fetch_assoc($query2);
+					echo "<span id='profilename'>".$profile['username'].'</span><br/>';
+					echo "<img src='users/".$profile['photo']."' title='".$profile['username']."' height='300' width='300'/><br/>";
+			?>
+						<span class='setting'><a href='settings.php?act=changephoto'>Change Photo</a></span><br/>
+						<span class='setting'><a href='settings.php?act=editacc'>Edit Account Details</a></span><br/>
+						<span class='setting'><a href='settings.php?act=changepassword'>Change Password</a></span><br/>
+			<?php
 					echo "</div>";
 					echo "<div id='setting'>";
 					if($_GET['act'] == 'changepassword'){

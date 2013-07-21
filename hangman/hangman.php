@@ -6,6 +6,9 @@
 <html>
 	<head>
 		<title>Hangman</title>
+		<link type='text/css' rel='stylesheet' href='../style.css'/>
+		<link type='text/css' rel='stylesheet' href='hangman.css'/>
+		<link type='image/x-icon' rel='icon' href='../favicon.ico'/>
 		<script type='text/javascript' src='hangman.js'></script>
 	</head>
 	<body>
@@ -13,7 +16,7 @@
 			MOVIES
 		</div>
 		<div id='nav'>
-			| <a href='../index.php'>Home</a> | <a href='../top.php'>Top Movies</a> | <a href='../profile.php?uid=<? echo $_SESSION['uid'];?>' >Profile</a> | <a href='../forum/'>Forum</a> | <a href='../hangman/hangman.php'>Fun</a> |
+			| <a href='../index.php'>Home</a> | <a href='../top.php'>Top Movies</a> | <a href='../profile.php?uid=<? echo $_SESSION['uid'];?>' >Profile</a> | <a href='../forum/'>Forum</a> | <a href='hangman.php'>Fun</a> |
 		</div>
 
 		<?php
@@ -52,48 +55,55 @@
 				}
 
 				$movie = generatemovie();
-				echo "<div id='hangmancontent'>";
+				echo "<script>var ans='".strtolower($movie['title'])."';</script>";
+				echo "<div id='keysnblank'>";
+				echo "<div id='blanks'>";
 				for($i=0;$i<strlen($movie['title']);$i++){
 					if($movie['title'][$i] != " "){
 						echo "<span class='letters' id='letter".$i."'>";
-						echo "___</span> &nbsp;";
+						echo "__</span> &nbsp;";
 					}
 					else
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 				}
+				echo "</div>";
 	?>
-				<input type='button' value='A' class='keys' id='A' onclick="checkvalue(<? echo $movie['id']; ?>,'A')">
-				<input type='button' value='B' class='keys' id='B' onclick="checkvalue(<? echo $movie['id']; ?>,'B')">
-				<input type='button' value='C' class='keys' id='C' onclick="checkvalue(<? echo $movie['id']; ?>,'C')">
-				<input type='button' value='D' class='keys' id='D' onclick="checkvalue(<? echo $movie['id']; ?>,'D')">
-				<input type='button' value='E' class='keys' id='E' onclick="checkvalue(<? echo $movie['id']; ?>,'E')">
-				<input type='button' value='F' class='keys' id='F' onclick="checkvalue(<? echo $movie['id']; ?>,'F')">
-				<input type='button' value='G' class='keys' id='G' onclick="checkvalue(<? echo $movie['id']; ?>,'G')">
-				<input type='button' value='H' class='keys' id='H' onclick="checkvalue(<? echo $movie['id']; ?>,'H')">
-				<input type='button' value='I' class='keys' id='I' onclick="checkvalue(<? echo $movie['id']; ?>,'I')">
-				<input type='button' value='J' class='keys' id='J' onclick="checkvalue(<? echo $movie['id']; ?>,'J')">
-				<input type='button' value='K' class='keys' id='K' onclick="checkvalue(<? echo $movie['id']; ?>,'K')">
-				<input type='button' value='L' class='keys' id='L' onclick="checkvalue(<? echo $movie['id']; ?>,'L')">
-				<input type='button' value='M' class='keys' id='M' onclick="checkvalue(<? echo $movie['id']; ?>,'M')">
-				<input type='button' value='N' class='keys' id='N' onclick="checkvalue(<? echo $movie['id']; ?>,'N')">
-				<input type='button' value='O' class='keys' id='O' onclick="checkvalue(<? echo $movie['id']; ?>,'O')">
-				<input type='button' value='P' class='keys' id='P' onclick="checkvalue(<? echo $movie['id']; ?>,'P')">
-				<input type='button' value='Q' class='keys' id='Q' onclick="checkvalue(<? echo $movie['id']; ?>,'Q')">
-				<input type='button' value='R' class='keys' id='R' onclick="checkvalue(<? echo $movie['id']; ?>,'R')">
-				<input type='button' value='S' class='keys' id='S' onclick="checkvalue(<? echo $movie['id']; ?>,'S')">
-				<input type='button' value='T' class='keys' id='T' onclick="checkvalue(<? echo $movie['id']; ?>,'T')">
-				<input type='button' value='U' class='keys' id='U' onclick="checkvalue(<? echo $movie['id']; ?>,'U')">
-				<input type='button' value='V' class='keys' id='V' onclick="checkvalue(<? echo $movie['id']; ?>,'V')">
-				<input type='button' value='W' class='keys' id='W' onclick="checkvalue(<? echo $movie['id']; ?>,'W')">
-				<input type='button' value='X' class='keys' id='X' onclick="checkvalue(<? echo $movie['id']; ?>,'X')">
-				<input type='button' value='Y' class='keys' id='Y' onclick="checkvalue(<? echo $movie['id']; ?>,'Y')">
-				<input type='button' value='Z' class='keys' id='Z' onclick="checkvalue(<? echo $movie['id']; ?>,'Z')">
-
+				<div id='input'>
+				<input type='button' value='A' class='keys' id='A' onclick="checkvalue('A')">
+				<input type='button' value='B' class='keys' id='B' onclick="checkvalue('B')">
+				<input type='button' value='C' class='keys' id='C' onclick="checkvalue('C')">
+				<input type='button' value='D' class='keys' id='D' onclick="checkvalue('D')">
+				<input type='button' value='E' class='keys' id='E' onclick="checkvalue('E')">
+				<input type='button' value='F' class='keys' id='F' onclick="checkvalue('F')">
+				<input type='button' value='G' class='keys' id='G' onclick="checkvalue('G')">
+				<input type='button' value='H' class='keys' id='H' onclick="checkvalue('H')">
+				<input type='button' value='I' class='keys' id='I' onclick="checkvalue('I')"><br/>
+				<input type='button' value='J' class='keys' id='J' onclick="checkvalue('J')">
+				<input type='button' value='K' class='keys' id='K' onclick="checkvalue('K')">
+				<input type='button' value='L' class='keys' id='L' onclick="checkvalue('L')">
+				<input type='button' value='M' class='keys' id='M' onclick="checkvalue('M')">
+				<input type='button' value='N' class='keys' id='N' onclick="checkvalue('N')">
+				<input type='button' value='O' class='keys' id='O' onclick="checkvalue('O')">
+				<input type='button' value='P' class='keys' id='P' onclick="checkvalue('P')">
+				<input type='button' value='Q' class='keys' id='Q' onclick="checkvalue('Q')">
+				<input type='button' value='R' class='keys' id='R' onclick="checkvalue('R')"><br/>
+				<input type='button' value='S' class='keys' id='S' onclick="checkvalue('S')">
+				<input type='button' value='T' class='keys' id='T' onclick="checkvalue('T')">
+				<input type='button' value='U' class='keys' id='U' onclick="checkvalue('U')">
+				<input type='button' value='V' class='keys' id='V' onclick="checkvalue('V')">
+				<input type='button' value='W' class='keys' id='W' onclick="checkvalue('W')">
+				<input type='button' value='X' class='keys' id='X' onclick="checkvalue('X')">
+				<input type='button' value='Y' class='keys' id='Y' onclick="checkvalue('Y')">
+				<input type='button' value='Z' class='keys' id='Z' onclick="checkvalue('Z')"><br/><br/>
+				<a href='hangman.php'><input type='button' name='reset' value='Reset'/></a><br/>
+				<input type='button' value='Solve' id='solve' onclick="solvehman()">
+				</div>
+				</div>
+				<div id='hangmanimg'>
 				<img src='images/1.png' id='hangman' width='500' height='500'/>
-							
+				</div>
 	<?php
-		echo "</div>";
-				}
+				}	
 		?>
 	</body>
 </html>

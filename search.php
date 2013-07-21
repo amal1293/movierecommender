@@ -5,14 +5,16 @@
 ?>
 <html>
 	<head>
-		<title>Search Results:</title>
+		<title>Search</title>
+		<link type='text/css' href='style.css' rel='stylesheet'/>
+		<link rel='icon' href='favicon.ico' type='image/x-icon'/>
 	</head>
 	<body>
 		<div id='header'>
 			MOVIES
 		</div>
 		<div id='nav'>
-			| <a href='index.php'>Home</a> | <a href='top.php'>Top Movies</a> | Profile | <a href='forum/'>Forum</a> | <a href='hangman/hangman.php'>Fun</a> |
+			| <a href='index.php'>Home</a> | <a href='top.php'>Top Movies</a> | <a href='profile.php?uid=<? echo $_SESSION['uid']; ?>'>Profile</a> | <a href='forum/'>Forum</a> | <a href='hangman/hangman.php'>Fun</a> |
 		</div>
 		<?php
 
@@ -28,12 +30,17 @@
 				echo "Welcome <a href='profile.php?uid=".$_SESSION['uid']."'>".$username."</a> | ";
 				if($admin == 1)
 					echo "<a href='adminpanel.php'>Admin Control Panel</a> | ";
-				echo "<a href='logout.php'>Logout</a>";
-				echo "</div>";
-				echo "<form method='GET' action='search.php?query=".$_GET['query']."'>";
-				echo "<input type='text' name='query' id='search'/>";
-				echo "<input type='submit' name='search' value='Search'/>";
-				echo "</form>";
+		?>
+				<a href='logout.php'>Logout</a>
+				</div>
+				<div id='searchbox'>
+				<form method='GET' action='search.php?query=<? echo $_GET['query']; ?>'>
+				<input type='text' name='query' id='search'/>
+				<input type='submit' name='search' value='Search'/>
+				</form>
+				</div>
+				<div id='maincontent'>
+		<?
 				if(!isset($_GET['query'])){
 					echo "No results found.<br/>";
 				}
@@ -111,10 +118,58 @@
 							}
 						}
 						else{
+							foreach($searchterms as $term){
+								$sql5 = "SELECT id,title,keywords FROM movies";
+								$query5 = mysql_query($sql5) or die(mysql_error());
+								if(mysql_num_rows($query5) >0){
+									while($kword = mysql_fetch_assoc($query5)){
+										$key = $kword['id'];
+										$allkwords = explode(",",$kword['keywords']);
+										foreach($allkwords as $fuzzy){
+											similar_text($term,$fuzzy,$perc);
+											if($perc > 70){
+												if(isset($occuranceno[$key])){
+													$termsmatched[$key] += 1;
+													break;
+												}
+												else{
+													$termsmatched[$key] = 1;
+													break;
+												}
+											}
+										}
+										//echo $term.' has '.$count[$term].' occ. in '.$keyword['id'].'<br/>';
+									//**
+									}
+								}
+							}
+							if(isset($termsmatched)){
+							echo "No results found for ".$_GET['query'].".Showing results for related searches.<br/>";
+							arsort($termsmatched);
+							$limit = 0;
+							foreach($termsmatched as $fkey=>$fuzzyresult){
+								$sql6 = "SELECT * FROM movies WHERE id='".$fkey."'";
+								$query6 = mysql_query($sql6) or die(mysql_error());
+								if(mysql_num_rows($query6) > 0){
+									echo "Movie Name:<a href='movie.php?mid=".$fkey."'>".mysql_result($query6,0,'title').'</a><br/>';
+								}
+								$limit++;
+								if($limit == 10)
+									break;
+							}
+						}
+							// Fuzzy Search
+						else{
 							echo "No results found.<br/>";
+						}
 						}
 					}
 				}
+				echo "</div>";
+				echo "<div id='newmovies'>";
+				require 'newmovies.php';
+				echo "</div>";
+
 			}
 		?>
 	</body>

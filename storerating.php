@@ -33,7 +33,7 @@
 					$sql6 = "INSERT INTO compare(movie1,movie2,users_rated_both,sum) VALUES('".$_GET['mid']."','".$result['othermovieid']."',1,'".$diff."')";
 					$query6 = mysql_query($sql6) or die(mysql_error());
 				}
-				$sql7 = "SELECT movie1 FROM compare WHERE movie1='".$result['othermovieid']."' AND movie2='".$_GET['mid']."'";
+				/*$sql7 = "SELECT movie1 FROM compare WHERE movie1='".$result['othermovieid']."' AND movie2='".$_GET['mid']."'";
 				$query7 = mysql_query($sql7) or die(mysql_error());
 				if(mysql_num_rows($query7) > 0){
 					$sql8 = "UPDATE compare SET users_rated_both=users_rated_both+1,sum=sum-$diff WHERE movie1='".$result['othermovieid']."' AND movie2 = '".$_GET['mid']."'";
@@ -42,7 +42,7 @@
 				else{
 					$sql9 = "INSERT INTO compare(movie1,movie2,users_rated_both,sum) VALUES('".$result['othermovieid']."','".$_GET['mid']."',1,'".-1*$diff."')";
 					$query9 = mysql_query($sql9) or die(mysql_error());
-				}
+				}*/
 			}
 		}
 	}
